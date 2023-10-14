@@ -17,6 +17,7 @@ Kelompok E13 mendapatkan Topologi 08 sebagai berikut:
 -------------------------------------------------------------------------------------------------
 
 Hasil topologi yang telah dibuat adalah:
+![alt text](img/1a.png)
 
 Konfigurasi network:
 
@@ -117,7 +118,7 @@ Kalau butuh echo nameserver 192.168.122.1 > /etc/resolv.conf
 
 
 2. Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
-   
+....................................................................   
 
 Di DNS Master yudhis:
 
@@ -125,6 +126,8 @@ Di DNS Master yudhis:
  apt-get install bind9 -y
 
 Cd root/ dulu kemudian nano makedomain.sh
+
+![alt text](img/1a.png)
 
 echo ‘zone "arjuna.e13.com" {
 	type master;
@@ -151,9 +154,11 @@ ping arjuna.e13.com
 ping www.arjuna.e13.com
 host -t CNAME www.arjuna.e13.com
 
+![alt text](img/1a.png)
+
 
 3. Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
-   
+...............................................................   
 
 Di DNS Master yudhis:
 
@@ -161,6 +166,9 @@ apt update
 apt install bind9 -y
 
 makedomain.sh
+
+![alt text](img/1a.png)
+
 echo ‘zone "abimanyu.e13.com" {
 	type master;
 	file "/etc/bind/jarkom/abimanyu.e13.com";
@@ -182,9 +190,11 @@ ping abimanyu.e13.com
 ping www.abimanyu.e13.com
 host -t CNAME www.abimanyu.e13.com
 
+![alt text](img/1a.png)
+
 
 4. Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
-
+...................................................................................
 
 nano /etc/bind/jarkom/jarko
 
@@ -194,15 +204,21 @@ Restart service bind
 
 Ping ke subdomain dari PrabukusumaWebServer
 
+![alt text](img/1a.png)
+
 
 5. Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
-
+...................................................................................
+![alt text](img/1a.png)
 
 6. Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
-
+................................................................................
+   
 Yudhistira:
 
 nano /etc/bind/named.conf.local
+
+![alt text](img/1a.png)
 
 zone "arjuna.e13.com" {
     type master;
@@ -254,9 +270,11 @@ NakulaClient:
 Cek nameserver
 ping web webnya
 
+![alt text](img/1a.png)
+
 
 7. Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
-   
+.......................................................................................................
 
 Yudhistira:
 
@@ -299,9 +317,12 @@ NakulaClient:
 ping baratayuda.abimanyu.e13.com
 ping www.baratayuda.abimanyu.e13.com
 
+![alt text](img/1a.png)
+
 
 8. Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
-
+..........................................................................
+   
 Werkudara:
 
 nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
@@ -315,9 +336,11 @@ ping rjp.baratayuda.abimanyu.e13.com -c 5
 ping www.rjp.baratayuda.abimanyu.e13.com -c 5
 host -t A rjp.baratayuda.abimanyu.e13.com
 
+![alt text](img/1a.png)
+
 
 9. Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
-    
+.............................................................................
 
 >>LB ARJUNA
 echo nameserver 192.168.122.1 > /etc/resolv.conf
@@ -415,15 +438,22 @@ nameserver 10.43.2.3 # IP Werkudara
 
 lynx http://10.43.1.4
 
+![alt text](img/1a.png)
+
 lynx http://10.43.1.5
 
+![alt text](img/1a.png)
+
 lynx http://10.43.1.6
+
+![alt text](img/1a.png)
 
 
 10. Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
     - Prabakusuma:8001
     - Abimanyu:8002
     - Wisanggeni:8003
+.............................................................................................
 
 NOMER 10 – sebenernya nomer 9 tp ganti beberapa dikit
 
@@ -490,6 +520,8 @@ lynx http://10.43.1.5
 lynx http://10.43.1.6
 lynx http://10.43.2.4
 lynx http://arjuna.e13.com
+
+![alt text](img/1a.png)
 
 
 
