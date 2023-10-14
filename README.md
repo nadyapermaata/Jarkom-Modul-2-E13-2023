@@ -14,7 +14,7 @@ Prefix IP Kelompok E13: 10.43
 Soal:
 1. Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut 
 Kelompok E13 mendapatkan Topologi 08 sebagai berikut:
--------------------------------------------------------------------------------------------------
+
 
 Hasil topologi yang telah dibuat adalah:
 ![alt text](img/1a.png)
@@ -118,7 +118,6 @@ Kalau butuh echo nameserver 192.168.122.1 > /etc/resolv.conf
 
 
 2. Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
-.. . . . . . . . . ... . .. .  .. . .  . . . . . . . . ..  . . .  . . .. . 
 
 Di DNS Master yudhis:
 
@@ -158,7 +157,7 @@ host -t CNAME www.arjuna.e13.com
 
 
 3. Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
-......................................................................................
+
    
 
 Di DNS Master yudhis:
@@ -195,7 +194,7 @@ host -t CNAME www.abimanyu.e13.com
 
 
 4. Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
-.................................................................................................
+
    
 
 nano /etc/bind/jarkom/jarko
@@ -210,12 +209,11 @@ Ping ke subdomain dari PrabukusumaWebServer
 
 
 5. Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
-..................................................................................................
-   
+
 ![alt text](img/1a.png)
 
 7. Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
-..................................................................................................
+
    
    
 Yudhistira:
@@ -278,7 +276,7 @@ ping web webnya
 
 
 7. Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
-.........................................................................................................
+
    
 
 Yudhistira:
@@ -326,7 +324,7 @@ ping www.baratayuda.abimanyu.e13.com
 
 
 8. Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
-.................................................................................................................
+
    
    
 Werkudara:
@@ -346,7 +344,6 @@ host -t A rjp.baratayuda.abimanyu.e13.com
 
 
 9. Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
-.............................................................................
 
 >>LB ARJUNA
 echo nameserver 192.168.122.1 > /etc/resolv.conf
@@ -459,7 +456,7 @@ lynx http://10.43.1.6
     - Prabakusuma:8001
     - Abimanyu:8002
     - Wisanggeni:8003
-...................................................................................................
+
       
 
 NOMER 10 – sebenernya nomer 9 tp ganti beberapa dikit
