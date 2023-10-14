@@ -15,10 +15,11 @@ Soal:
 1.  Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut 
 Kelompok E13 mendapatkan Topologi 08 sebagai berikut:
 
+<img width="470" alt="soal1" src="img/1.png">
 
 Hasil topologi yang telah dibuat adalah:
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/1a.png">
 
 >>Konfigurasi network:
 
@@ -160,7 +161,6 @@ Konfigurasi pada ArjunaLoadBalancer
 		file "/etc/bind/jarkom/arjuna.e13.com";
 		};’ >> /etc/bind/named.conf.local
 
-![alt text](img/1a.png)
 
 - Membuat directory baru dengan nama "jarkom"
 
@@ -173,6 +173,8 @@ Konfigurasi pada ArjunaLoadBalancer
 - Membuat file arjuna.e13.com di dalam directory jarkom
 
 		nano /etc/bind/jarkom/arjuna.e13.com
+  
+  <img width="470" alt="soal1" src="img/2.png">
   
 - Merestart bind9
 
@@ -190,7 +192,7 @@ Kalau belom → echo nameserver 192.168.122.1 > /etc/resolv.conf
 	ping www.arjuna.e13.com
 	host -t CNAME www.arjuna.e13.com
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/2a.png">
 
 
 3. Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
@@ -202,7 +204,6 @@ Kalau belom → echo nameserver 192.168.122.1 > /etc/resolv.conf
 
 makedomain.sh
 
-![alt text](img/1a.png)
 
 	echo ‘zone "abimanyu.e13.com" {
 	type master;
@@ -212,6 +213,8 @@ makedomain.sh
 - Mengcopy /etc/bind/db.local ke /etc/bind/jarkom/abimanyu.e13.com
 
 		cp /etc/bind/db.local /etc/bind/jarkom/abimanyu.e13.com
+  
+  <img width="470" alt="soal1" src="img/3.png">
   
 - Membuat file abimanyu.e13.com dalam directory jarkom
 
@@ -231,7 +234,7 @@ makedomain.sh
 		ping www.abimanyu.e13.com
 		host -t CNAME www.abimanyu.e13.com
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/3a.png">
 
 
 4. Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
@@ -244,14 +247,16 @@ nano /etc/bind/jarkom/jarkom
 - Restart service bind
 - Ping ke subdomain dari PrabukusumaWebServer
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/4.png">
+<img width="470" alt="soal1" src="img/4a.png">
 
 
 5. Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/5.png">
+<img width="470" alt="soal1" src="img/5a.png">
 
-7. Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
+6. Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
 
    
 >>Yudhistira:
@@ -275,8 +280,6 @@ nano /etc/bind/jarkom/jarkom
 	    		allow-transfer { 10.43.2.3; }; //IP Werkudara
 	    		file "/etc/bind/jarkom/abimanyu.e13.com";
 				};
- 
-![alt text](img/1a.png)
 
 - Merestart bind9
   
@@ -322,7 +325,7 @@ lalu tambahkan:
 -Cek nameserver
 -ping web webnya
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/6.png">
 
 
 7. Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
@@ -333,6 +336,8 @@ lalu tambahkan:
 - Membuka file /etc/bind/jarkom/abimanyu.e13.com
 
 		nano /etc/bind/jarkom/abimanyu.e13.com
+
+  <img width="470" alt="soal1" src="img/7.png">
   
 - Membuka file /etc/bind/named.conf.options
 
@@ -381,6 +386,8 @@ comment dnssec-validation auto; dan tambahkan baris berikut pada /etc/bind/named
   
 		nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
   
+  <img width="470" alt="soal1" src="img/7a.png">
+  
 - Restart bind9
 
 		service bind9 restart
@@ -390,7 +397,7 @@ comment dnssec-validation auto; dan tambahkan baris berikut pada /etc/bind/named
 	ping baratayuda.abimanyu.e13.com
 	ping www.baratayuda.abimanyu.e13.com
 	
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/7b.png">
 
 
 8. Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
@@ -400,6 +407,8 @@ comment dnssec-validation auto; dan tambahkan baris berikut pada /etc/bind/named
 >>Werkudara:
 
 	nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
+ 
+ <img width="470" alt="soal1" src="img/8.png">
 
 	service bind9 restart
 
@@ -410,7 +419,7 @@ comment dnssec-validation auto; dan tambahkan baris berikut pada /etc/bind/named
 	ping www.rjp.baratayuda.abimanyu.e13.com -c 5
 	host -t A rjp.baratayuda.abimanyu.e13.com
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/8a.png">
 
 
 9. Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
@@ -545,16 +554,15 @@ lalu tambahkan:
 
 lynx http://10.43.1.4
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/9a.png">
 
 lynx http://10.43.1.5
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/9b.png">
 
 lynx http://10.43.1.6
 
-![alt text](img/1a.png)
-
+<img width="470" alt="soal1" src="img/9c.png">
 
 10. Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
     - Prabakusuma:8001
@@ -639,7 +647,7 @@ lynx http://10.43.1.6
 lynx http://10.43.2.4
 lynx http://arjuna.e13.com
 
-![alt text](img/1a.png)
+<img width="470" alt="soal1" src="img/10.png">
 
 
 
