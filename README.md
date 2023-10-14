@@ -25,14 +25,20 @@ Hasil topologi yang telah dibuat adalah:
 - Router:
 
 auto eth0
+
 iface eth0 inet dhcp
+
 auto eth1
+
 iface eth1 inet static
+
 	address 10.43.1.1
 	netmask 255.255.255.0
 
 auto eth2
+
 iface eth2 inet static
+
 	address 10.43.2.1
 	netmask 255.255.255.0
  
@@ -40,7 +46,9 @@ iface eth2 inet static
 - NakulaClient
 
 *auto eth0
+
 iface eth0 inet static
+
 	address 10.43.1.2
 	netmask 255.255.255.0
 	gateway 10.43.1.1
@@ -49,7 +57,9 @@ iface eth0 inet static
 - SadewaClient
 
 auto eth0
+
 iface eth0 inet static
+
 	address 10.43.1.3
 	netmask 255.255.255.0
 	gateway 10.43.1.1
@@ -58,7 +68,9 @@ iface eth0 inet static
 - AbimanyuWebServer
 
 auto eth0
+
 iface eth0 inet static
+
 	address 10.43.1.4
 	netmask 255.255.255.0
 	gateway 10.43.1.1
@@ -67,7 +79,9 @@ iface eth0 inet static
 - PrabukusumaWebServer
 
 auto eth0
+
 iface eth0 inet static
+
 	address 10.43.1.5
 	netmask 255.255.255.0
 	gateway 10.43.1.1
@@ -76,7 +90,9 @@ iface eth0 inet static
 - WisanggeniWebServer
 
 auto eth0
+
 iface eth0 inet static
+
 	address 10.43.1.6
 	netmask 255.255.255.0
 	gateway 10.43.1.1
@@ -85,7 +101,9 @@ iface eth0 inet static
 - YudhistiraDNSMaster
 
 auto eth0
+
 iface eth0 inet static
+
 	address 10.43.2.2
 	netmask 255.255.255.0
 	gateway 10.43.2.1
@@ -94,7 +112,9 @@ iface eth0 inet static
 - WerkudaraDNSSlave
 
 auto eth0
+
 iface eth0 inet static
+
 	address 10.43.2.3
 	netmask 255.255.255.0
 	gateway 10.43.2.1
@@ -103,7 +123,9 @@ iface eth0 inet static
 - ArjunaLoadBalancer
 
 auto eth0
+
 iface eth0 inet static
+
 	address 10.43.2.4
 	netmask 255.255.255.0
 	gateway 10.43.2.1
