@@ -150,8 +150,8 @@ Konfigurasi pada ArjunaLoadBalancer
 
 >>Di DNS Master yudhis:
 
-	 apt-get update
-	 apt-get install bind9 -y
+		 apt-get update
+	 	apt-get install bind9 -y
 
 - Cd root/ dulu kemudian nano makedomain.sh
 
@@ -241,9 +241,7 @@ nano /etc/bind/jarkom/jarkom
 >>Pada Yudhistira:
 
 - edit file /etc/bind/jarkom/arjuna.e13.com lalu tambahkan subdomain untuk arjuna.e13.com yang mengarah ke IP Abimanyu
-
 - Restart service bind
-
 - Ping ke subdomain dari PrabukusumaWebServer
 
 ![alt text](img/1a.png)
@@ -259,24 +257,24 @@ nano /etc/bind/jarkom/jarkom
 >>Yudhistira:
 
 - Membuka file /etc/bind/named.conf.local
-
-		nano /etc/bind/named.conf.local
-
-		zone "arjuna.e13.com" {
-    		type master;
-   		 notify yes;
-   		 also-notify { 10.43.2.3; }; //IP Werkudara
-    		allow-transfer { 10.43.2.3; }; //IP Werkudara
-    		file "/etc/bind/jarkom/arjuna.e13.com";
-		};
-
-		zone "abimanyu.e13.com" {
-   		 type master;
-   		 notify yes;
-    		also-notify { 10.43.2.3; }; //IP Werkudara
-    		allow-transfer { 10.43.2.3; }; //IP Werkudara
-    		file "/etc/bind/jarkom/abimanyu.e13.com";
+	
+			nano /etc/bind/named.conf.local
+	
+			zone "arjuna.e13.com" {
+	    		type master;
+	   		 notify yes;
+	   		 also-notify { 10.43.2.3; }; //IP Werkudara
+	    		allow-transfer { 10.43.2.3; }; //IP Werkudara
+	    		file "/etc/bind/jarkom/arjuna.e13.com";
 			};
+	
+			zone "abimanyu.e13.com" {
+	   		 type master;
+	   		 notify yes;
+	    		also-notify { 10.43.2.3; }; //IP Werkudara
+	    		allow-transfer { 10.43.2.3; }; //IP Werkudara
+	    		file "/etc/bind/jarkom/abimanyu.e13.com";
+				};
  
 ![alt text](img/1a.png)
 
