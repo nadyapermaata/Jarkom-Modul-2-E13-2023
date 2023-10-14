@@ -12,16 +12,17 @@ NADYA PERMATA SARI
 Prefix IP Kelompok E13: 10.43
 
 Soal:
-1. Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut 
+1.  Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut 
 Kelompok E13 mendapatkan Topologi 08 sebagai berikut:
 
 
 Hasil topologi yang telah dibuat adalah:
+
 ![alt text](img/1a.png)
 
-Konfigurasi network:
+>>Konfigurasi network:
 
-Router:
+- Router:
 
 auto eth0
 iface eth0 inet dhcp
@@ -36,7 +37,7 @@ iface eth2 inet static
 	netmask 255.255.255.0
  
 
-NakulaClient
+- NakulaClient
 
 *auto eth0
 iface eth0 inet static
@@ -45,7 +46,7 @@ iface eth0 inet static
 	gateway 10.43.1.1
  
 
-SadewaClient
+- SadewaClient
 
 auto eth0
 iface eth0 inet static
@@ -54,7 +55,7 @@ iface eth0 inet static
 	gateway 10.43.1.1
 
 
-AbimanyuWebServer
+- AbimanyuWebServer
 
 auto eth0
 iface eth0 inet static
@@ -63,7 +64,7 @@ iface eth0 inet static
 	gateway 10.43.1.1
  
 
-PrabukusumaWebServer
+- PrabukusumaWebServer
 
 auto eth0
 iface eth0 inet static
@@ -72,7 +73,7 @@ iface eth0 inet static
 	gateway 10.43.1.1
 
 
-WisanggeniWebServer
+- WisanggeniWebServer
 
 auto eth0
 iface eth0 inet static
@@ -81,7 +82,7 @@ iface eth0 inet static
 	gateway 10.43.1.1
 
 
-YudhistiraDNSMaster
+- YudhistiraDNSMaster
 
 auto eth0
 iface eth0 inet static
@@ -90,7 +91,7 @@ iface eth0 inet static
 	gateway 10.43.2.1
  
 
-WerkudaraDNSSlave
+- WerkudaraDNSSlave
 
 auto eth0
 iface eth0 inet static
@@ -99,7 +100,7 @@ iface eth0 inet static
 	gateway 10.43.2.1
  
 
-ArjunaLoadBalancer
+- ArjunaLoadBalancer
 
 auto eth0
 iface eth0 inet static
@@ -108,13 +109,13 @@ iface eth0 inet static
 	gateway 10.43.2.1
  
 
-Restart semua Node
+- Restart semua Node
 
-Di Router, nano /root/.bashrc terus kasih paling bawah:
+- Di Router, nano /root/.bashrc terus kasih paling bawah:
 
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.43.0.0/16
 
-Kalau butuh echo nameserver 192.168.122.1 > /etc/resolv.conf
+- Kalau butuh echo nameserver 192.168.122.1 > /etc/resolv.conf
 
 
 2. Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
