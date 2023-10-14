@@ -118,8 +118,7 @@ Kalau butuh echo nameserver 192.168.122.1 > /etc/resolv.conf
 
 
 2. Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
-.....................................................................................
-   
+.. . . . . . . . . ... . .. .  .. . .  . . . . . . . . ..  . . .  . . .. . 
 
 Di DNS Master yudhis:
 
