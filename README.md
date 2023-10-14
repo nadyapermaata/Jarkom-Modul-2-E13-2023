@@ -1,6 +1,7 @@
 # Jarkom-Modul-2-E13-2023
 
 E13
+
 5025211239
 Najma Ulya Agustina
 
@@ -18,11 +19,10 @@ Hasil topologi yang telah dibuat adalah:
 
 Konfigurasi network:
 
->> Router:
+Router:
 
-auto eth0
+>>auto eth0
 iface eth0 inet dhcp
-
 auto eth1
 iface eth1 inet static
 	address 10.43.1.1
@@ -36,7 +36,7 @@ iface eth2 inet static
 
 NakulaClient
 
-auto eth0
+>>auto eth0
 iface eth0 inet static
 	address 10.43.1.2
 	netmask 255.255.255.0
