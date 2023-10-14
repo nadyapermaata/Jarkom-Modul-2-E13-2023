@@ -22,7 +22,7 @@ Konfigurasi network:
 
 Router:
 
-'auto eth0
+auto eth0
 iface eth0 inet dhcp
 auto eth1
 iface eth1 inet static
@@ -32,12 +32,12 @@ iface eth1 inet static
 auto eth2
 iface eth2 inet static
 	address 10.43.2.1
-	netmask 255.255.255.0'
+	netmask 255.255.255.0
  
 
 NakulaClient
 
->>auto eth0
+*auto eth0
 iface eth0 inet static
 	address 10.43.1.2
 	netmask 255.255.255.0
