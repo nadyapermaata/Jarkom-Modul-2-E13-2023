@@ -139,7 +139,6 @@ Konfigurasi pada ArjunaLoadBalancer
  
 
 - Restart semua Node
-
 - Di Router, nano /root/.bashrc terus kasih paling bawah:
 
 		iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.43.0.0/16
@@ -149,91 +148,103 @@ Konfigurasi pada ArjunaLoadBalancer
 
 2. Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
 
-Di DNS Master yudhis:
+>>Di DNS Master yudhis:
 
- apt-get update
- apt-get install bind9 -y
+	 apt-get update
+	 apt-get install bind9 -y
 
-Cd root/ dulu kemudian nano makedomain.sh
+- Cd root/ dulu kemudian nano makedomain.sh
+
+		echo ‘zone "arjuna.e13.com" {
+		type master;
+		file "/etc/bind/jarkom/arjuna.e13.com";
+		};’ >> /etc/bind/named.conf.local
 
 ![alt text](img/1a.png)
 
-echo ‘zone "arjuna.e13.com" {
-	type master;
-	file "/etc/bind/jarkom/arjuna.e13.com";
-};’ >> /etc/bind/named.conf.local
+- Membuat directory baru dengan nama "jarkom"
 
-mkdir /etc/bind/jarkom
+		mkdir /etc/bind/jarkom
+  
+- Copy file /etc/bind/db.local ke /etc/bind/jarkom/arjuna.e13.com
 
-cp /etc/bind/db.local /etc/bind/jarkom/arjuna.e13.com
+		cp /etc/bind/db.local /etc/bind/jarkom/arjuna.e13.com
 
-nano /etc/bind/jarkom/arjuna.e13.com
+- Membuat file arjuna.e13.com di dalam directory jarkom
 
-service bind9 restart
+		nano /etc/bind/jarkom/arjuna.e13.com
+  
+- Merestart bind9
+
+		service bind9 restart
 
 
-Di NakulaClient:
+- Di NakulaClient:
 
 Kalau belom → echo nameserver 192.168.122.1 > /etc/resolv.conf
 
-apt-get update  
-apt-get install dnsutils -y  
-echo "nameserver 10.43.2.2" > /etc/resolv.conf 
-ping arjuna.e13.com
-ping www.arjuna.e13.com
-host -t CNAME www.arjuna.e13.com
+	apt-get update  
+	apt-get install dnsutils -y  
+	echo "nameserver 10.43.2.2" > /etc/resolv.conf 
+	ping arjuna.e13.com
+	ping www.arjuna.e13.com
+	host -t CNAME www.arjuna.e13.com
 
 ![alt text](img/1a.png)
 
 
 3. Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
 
-   
+>>Di DNS Master yudhis:
 
-Di DNS Master yudhis:
-
-apt update
-apt install bind9 -y
+	apt update
+	apt install bind9 -y
 
 makedomain.sh
 
 ![alt text](img/1a.png)
 
-echo ‘zone "abimanyu.e13.com" {
+	echo ‘zone "abimanyu.e13.com" {
 	type master;
 	file "/etc/bind/jarkom/abimanyu.e13.com";
-};’ >> /etc/bind/named.conf.local
+	};’ >> /etc/bind/named.conf.local
 
-cp /etc/bind/db.local /etc/bind/jarkom/abimanyu.e13.com
+- Mengcopy /etc/bind/db.local ke /etc/bind/jarkom/abimanyu.e13.com
 
-nano /etc/bind/jarkom/abimanyu.e13.com
+		cp /etc/bind/db.local /etc/bind/jarkom/abimanyu.e13.com
+  
+- Membuat file abimanyu.e13.com dalam directory jarkom
 
-service bind9 restart
+		nano /etc/bind/jarkom/abimanyu.e13.com
+  
+- Merestart bind9 agar file konfigurasi dapat tersimpan
+
+		service bind9 restart
 
 
-Di NakulaClient:
+- Di NakulaClient:
 
-apt-get update  
-apt-get install dnsutils -y  
-echo "nameserver 10.43.2.2" > /etc/resolv.conf 
-ping abimanyu.e13.com
-ping www.abimanyu.e13.com
-host -t CNAME www.abimanyu.e13.com
+		apt-get update  
+		apt-get install dnsutils -y  
+		echo "nameserver 10.43.2.2" > /etc/resolv.conf 
+		ping abimanyu.e13.com
+		ping www.abimanyu.e13.com
+		host -t CNAME www.abimanyu.e13.com
 
 ![alt text](img/1a.png)
 
 
 4. Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
 
-   
+nano /etc/bind/jarkom/jarkom
 
-nano /etc/bind/jarkom/jarko
+>>Pada Yudhistira:
 
-Pada Yudhistira, edit file /etc/bind/jarkom/arjuna.e13.com lalu tambahkan subdomain untuk arjuna.e13.com yang mengarah ke IP Abimanyu
+- edit file /etc/bind/jarkom/arjuna.e13.com lalu tambahkan subdomain untuk arjuna.e13.com yang mengarah ke IP Abimanyu
 
-Restart service bind
+- Restart service bind
 
-Ping ke subdomain dari PrabukusumaWebServer
+- Ping ke subdomain dari PrabukusumaWebServer
 
 ![alt text](img/1a.png)
 
@@ -245,111 +256,142 @@ Ping ke subdomain dari PrabukusumaWebServer
 7. Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
 
    
-   
-Yudhistira:
+>>Yudhistira:
 
-nano /etc/bind/named.conf.local
+- Membuka file /etc/bind/named.conf.local
 
+		nano /etc/bind/named.conf.local
+
+		zone "arjuna.e13.com" {
+    		type master;
+   		 notify yes;
+   		 also-notify { 10.43.2.3; }; //IP Werkudara
+    		allow-transfer { 10.43.2.3; }; //IP Werkudara
+    		file "/etc/bind/jarkom/arjuna.e13.com";
+		};
+
+		zone "abimanyu.e13.com" {
+   		 type master;
+   		 notify yes;
+    		also-notify { 10.43.2.3; }; //IP Werkudara
+    		allow-transfer { 10.43.2.3; }; //IP Werkudara
+    		file "/etc/bind/jarkom/abimanyu.e13.com";
+			};
+ 
 ![alt text](img/1a.png)
 
-zone "arjuna.e13.com" {
-    type master;
-    notify yes;
-    also-notify { 10.43.2.3; }; //IP Werkudara
-    allow-transfer { 10.43.2.3; }; //IP Werkudara
-    file "/etc/bind/jarkom/arjuna.e13.com";
-};
-
-zone "abimanyu.e13.com" {
-    type master;
-    notify yes;
-    also-notify { 10.43.2.3; }; //IP Werkudara
-    allow-transfer { 10.43.2.3; }; //IP Werkudara
-    file "/etc/bind/jarkom/abimanyu.e13.com";
-};
-
-service bind9 restart
+- Merestart bind9
+  
+		service bind9 restart
 
 
-Werkudara:
+>>Werkudara:
 
-echo nameserver 192.168.122.1 > /etc/resolv.conf 
-apt-get update
-apt-get install bind9 -y
+	echo nameserver 192.168.122.1 > /etc/resolv.conf 
+	apt-get update
+	apt-get install bind9 -y
 
-nano /etc/bind/named.conf.local
+ - Membuka file /etc/bind/named.conf.local
 
-zone "arjuna.e13.com" {
+		nano /etc/bind/named.conf.local
+
+lalu tambahkan:
+
+	zone "arjuna.e13.com" {
     type slave;
     masters { 10.43.2.2; }; // IP Yudhistira
     file "/var/lib/bind/abimanyu.e13.com";
-};
+	};
 
-zone "abimanyu.e13.com" {
+	zone "abimanyu.e13.com" {
     type slave;
     masters { 10.43.2.2; }; // IP Yudhistira
     file "/var/lib/bind/abimanyu.e13.com";
-};
+	};
+ 
+- Restart bind9
+  
+		service bind9 restart
 
-service bind9 restart
+>Yudhistira:
 
-Yudhistira:
+- Matika bind9 pada yudhistira
+  
+		service bind9 stop
 
-service bind9 stop
+>>NakulaClient:
 
-NakulaClient:
-
-Cek nameserver
-ping web webnya
+-Cek nameserver
+-ping web webnya
 
 ![alt text](img/1a.png)
 
 
 7. Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
 
-   
 
-Yudhistira:
+>>Yudhistira:
 
-nano /etc/bind/jarkom/abimanyu.e13.com
+- Membuka file /etc/bind/jarkom/abimanyu.e13.com
 
-nano /etc/bind/named.conf.options
+		nano /etc/bind/jarkom/abimanyu.e13.com
+  
+- Membuka file /etc/bind/named.conf.options
+
+		nano /etc/bind/named.conf.options
+  
+lalu lakukan konfigurasi:
+
 comment dnssec-validation auto; dan tambahkan baris berikut pada /etc/bind/named.conf.options
 
-nano /etc/bind/named.conf.local
-zone "abimanyu.e13.com" {
+	nano /etc/bind/named.conf.local
+	zone "abimanyu.e13.com" {
         type master;
         //notify yes;
         //also-notify {10.45.2.3;};  
         allow-transfer {10.43.2.3;}; // IP Werkudara
         file "/etc/bind/jarkom/abimanyu.e13.com";
-};
+	};
 
+- Restart bind9 untuk menyimpan konfigurasi
+  
+		service bind9 restart
 
-service bind9 restart
+>>Werkudara:
 
-Werkudara:
-
-nano /etc/bind/named.conf.options
+- Membuka file  /etc/bind/named.conf.options
+  
+		nano /etc/bind/named.conf.options
+  
 comment dnssec-validation auto; dan tambahkan baris berikut pada /etc/bind/named.conf.options
 
-nano /etc/bind/named.conf.local
-zone "baratayuda.abimanyu.e13.com"{  
+	nano /etc/bind/named.conf.local
+	zone "baratayuda.abimanyu.e13.com"{  
         type master;
         file "/etc/bind/Baratayuda/baratayuda.abimanyu.e13.com";
-};  
+	};  
 
-mkdir /etc/bind/Baratayuda
-cp /etc/bind/db.local /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
-nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
+- Membuat directory Baratayuda
+  
+		mkdir /etc/bind/Baratayuda
 
-service bind9 restart
+- Mencopy file /etc/bind/db.local ke  /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
+  
+		cp /etc/bind/db.local /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
 
-NakulaClient:
+- Membuka file abimanyu.e13.com dalam directory /etc/bind/Baratayuda/baratayuda
+  
+		nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
+  
+- Restart bind9
 
-ping baratayuda.abimanyu.e13.com
-ping www.baratayuda.abimanyu.e13.com
+		service bind9 restart
 
+>>NakulaClient:
+
+	ping baratayuda.abimanyu.e13.com
+	ping www.baratayuda.abimanyu.e13.com
+	
 ![alt text](img/1a.png)
 
 
@@ -357,18 +399,18 @@ ping www.baratayuda.abimanyu.e13.com
 
    
    
-Werkudara:
+>>Werkudara:
 
-nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
+	nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
 
-service bind9 restart
+	service bind9 restart
 
-NakulaClient:
+>>NakulaClient:
 
-host -t CNAME www.rjp.baratayuda.abimanyu.e13.com
-ping rjp.baratayuda.abimanyu.e13.com -c 5
-ping www.rjp.baratayuda.abimanyu.e13.com -c 5
-host -t A rjp.baratayuda.abimanyu.e13.com
+	host -t CNAME www.rjp.baratayuda.abimanyu.e13.com
+	ping rjp.baratayuda.abimanyu.e13.com -c 5
+	ping www.rjp.baratayuda.abimanyu.e13.com -c 5
+	host -t A rjp.baratayuda.abimanyu.e13.com
 
 ![alt text](img/1a.png)
 
@@ -376,61 +418,88 @@ host -t A rjp.baratayuda.abimanyu.e13.com
 9. Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
 
 >>LB ARJUNA
-echo nameserver 192.168.122.1 > /etc/resolv.conf
-apt-get update
-apt-get install bind9 nginx -y
 
-nano /etc/nginx/sites-available/jarkom
-upstream myweb {
-  server 10.43.1.4; # IP Abimanyu
-  server 10.43.1.5; # IP Prabukusuma
-  server 10.43.1.6; # IP Wisanggeni
-}
+	echo nameserver 192.168.122.1 > /etc/resolv.conf
+	apt-get update
+	apt-get install bind9 nginx -y
 
-server {
-  listen 80;
-  server_name arjuna.e13.com www.arjuna.e13.com;
+ - Membuka file jarkom
 
-  location / {
+		nano /etc/nginx/sites-available/jarkom
+lalu tambahkan:
+
+	upstream myweb {
+  	server 10.43.1.4; # IP Abimanyu
+	  server 10.43.1.5; # IP Prabukusuma
+	  server 10.43.1.6; # IP Wisanggeni
+	}
+	
+	server {
+	  listen 80;
+  	server_name arjuna.e13.com www.arjuna.e13.com;
+
+  	location / {
     proxy_pass http://myweb;
-  }
-}
+  	}
+	}
 
-ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+- Lakukan symlink
+  
+		ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
 
-rm /etc/nginx/sites-enabled/default
+- Menghapus /etc/nginx/sites-enabled/default
 
-service nginx restart
+		rm /etc/nginx/sites-enabled/default
 
-nginx -t
+- Restart nginx
+  
+		service nginx restart
+
+- Mengecek apakah konfigurasi sudah dilakukan dengan benar
+  
+		nginx -t
 
 >>WORKER
 
-echo nameserver 192.168.122.1 > /etc/resolv.conf
-apt-get update
-apt install nginx php php-fpm -y
-php -v
->>>>mkdir; index.php
-mkdir /var/www/jarkom
+	echo nameserver 192.168.122.1 > /etc/resolv.conf
+	apt-get update
+	apt install nginx php php-fpm -y
+	php -v
+ 
+ - Membuat directory jarkom pada /var/www
+   
+		mkdir /var/www/jarkom
 
-nano /var/www/jarkom/index.php
-<?php
-$hostname = gethostname();
-$date = date('Y-m-d H:i:s');
-$php_version = phpversion();
-$username = get_current_user();
+ - Membuat file baru index.php pada /var/www/jarkom
+   
+		nano /var/www/jarkom/index.php
+   Dan tambahkan:
+
+		<?php
+		$hostname = gethostname();
+		$date = date('Y-m-d H:i:s');
+		$php_version = phpversion();
+		$username = get_current_user();
 
 
-echo "Hello World!<br>";
-echo "Saya adalah: $username<br>";
-echo "Saat ini berada di: $hostname<br>";
-echo "Versi PHP yang saya gunakan: $php_version<br>";
-echo "Tanggal saat ini: $date<br>";
-?>
+		echo "Hello World!<br>";
+		echo "Saya adalah: $username<br>";
+		echo "Saat ini berada di: $hostname<br>";
+		echo "Versi PHP yang saya gunakan: $php_version<br>";
+		echo "Tanggal saat ini: $date<br>";
+		?>
 
-service php7.2-fpm start
-nano /etc/nginx/sites-available/jarkom
-server {
+- Me run php
+  
+		service php7.2-fpm start
+  
+- Membuka file /etc/nginx/sites-available/jarkom
+  
+		nano /etc/nginx/sites-available/jarkom
+  
+  Lalu tambahkan:
+  
+		server {
         listen 80;
 
         root /var/www/jarkom;
@@ -450,24 +519,31 @@ server {
         location ~ /\.ht {
                 deny all;
         }
-}
+		}
+- Lakukan Symlink
 
-ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+		ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+  
+- Menghapus file /etc/nginx/sites-enabled/default
 
-rm /etc/nginx/sites-enabled/default
+		rm /etc/nginx/sites-enabled/default
+- Restart bind9
 
-service nginx restart
-nginx -t
+		service nginx restart
+  
+- Mengecek konfigurasi
+  
+		nginx -t
 
-Nakula:
+>>Nakula:
 
-echo nameserver 192.168.122.1 > /etc/resolv.conf
-apt-get update
-apt-get install lynx -y
-GAUSA apt-get install php -y
-nano /etc/resolv.conf
-nameserver 10.43.2.2 # IP Yudhistira
-nameserver 10.43.2.3 # IP Werkudara
+	echo nameserver 192.168.122.1 > /etc/resolv.conf
+	apt-get update
+	apt-get install lynx -y
+	GAUSA apt-get install php -y
+	nano /etc/resolv.conf
+	nameserver 10.43.2.2 # IP Yudhistira
+	nameserver 10.43.2.3 # IP Werkudara
 
 lynx http://10.43.1.4
 
@@ -491,63 +567,73 @@ lynx http://10.43.1.6
 
 NOMER 10 – sebenernya nomer 9 tp ganti beberapa dikit
 
-DII LB ARJUNA
-nano /etc/nginx/sites-available/jarkom
- # Default menggunakan Round Robin
- upstream myweb  {
- 	server 10.43.1.4:8001; #IP Abimanyu
- 	server 10.43.1.5:8002; #IP Prabukusuma
-	server 10.43.1.6:8003; #IP Wisanggeni
- }
+>>LB ARJUNA
 
- server {
- 	listen 80;
- 	server_name arjuna.e13.com www.arjuna.e13.com;
+- Membuka file  /etc/nginx/sites-available/jarkom
+  
+		nano /etc/nginx/sites-available/jarkom
+  Lalu tambahkan:
+  
+		 # Default menggunakan Round Robin
+		 upstream myweb  {
+ 		server 10.43.1.4:8001; #IP Abimanyu
+ 		server 10.43.1.5:8002; #IP Prabukusuma
+		server 10.43.1.6:8003; #IP Wisanggeni
+ 		}
 
- 	location / {
- 	proxy_pass http://myweb;
- 	}
- }
+		 server {
+	 	listen 80;
+	 	server_name arjuna.e13.com www.arjuna.e13.com;
+	
+	 	location / {
+	 	proxy_pass http://myweb;
+			 	}
+			 }
+		
+		service nginx restart
+		nginx -t
+		
+		DIII WORKERR
+		nano /etc/nginx/sites-available/jarkom
+		server {
+		        listen 80;
+	
+	        root /var/www/jarkom;
+	        index index.php index.html index.htm index.nginx-debian.html;
+	
+	        server_name _;
+	
+	        location / {
+	                try_files $uri $uri/ /index.php?$query_string;
+	        }
+	
+	        location ~ \.php$ {
+	                include snippets/fastcgi-php.conf;
+	                fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+	        }
+	
+	        location ~ /\.ht {
+	                deny all;
+	        }
+		}
 
-service nginx restart
-nginx -t
+- Restart nginx
+  
+		service nginx restart
+  
+- Mengecek konfigurasi
+  
+		nginx -t
 
-DIII WORKERR
-nano /etc/nginx/sites-available/jarkom
-server {
-        listen 80;
+>>Nakula:
 
-        root /var/www/jarkom;
-        index index.php index.html index.htm index.nginx-debian.html;
-
-        server_name _;
-
-        location / {
-                try_files $uri $uri/ /index.php?$query_string;
-        }
-
-        location ~ \.php$ {
-                include snippets/fastcgi-php.conf;
-                fastcgi_pass unix:/run/php/php7.2-fpm.sock;
-        }
-
-        location ~ /\.ht {
-                deny all;
-        }
-}
-
-service nginx restart
-nginx -t
-
-Nakula:
-
-echo nameserver 192.168.122.1 > /etc/resolv.conf
-apt-get update
-apt-get install lynx -y
-GAUSA apt-get install php -y
-nano /etc/resolv.conf
-nameserver 10.43.2.2 # IP Yudhistira
-nameserver 10.43.2.3 # IP Werkudara
+	echo nameserver 192.168.122.1 > /etc/resolv.conf
+	apt-get update
+	apt-get install lynx -y
+	GAUSA apt-get install php -y
+	nano /etc/resolv.conf
+	nameserver 10.43.2.2 # IP Yudhistira
+	nameserver 10.43.2.3 # IP Werkudara
 
 lynx http://10.43.1.4
 lynx http://10.43.1.5
