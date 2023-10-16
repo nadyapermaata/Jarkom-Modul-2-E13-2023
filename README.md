@@ -11,11 +11,11 @@ NADYA PERMATA SARI
 <h2>Daftar Isi</h2>
 
 - [Soal 1](#soal-1) <br>
-	- [Solusi](#solusi)
-	- [Testing](#testing)
+	- [Solusi](#solusi1)
+	- [Testing](#testing1)
 - [Soal 2](#soal-2) <br>
-	- [Solusi](#solusi)
-	- [Testing](#testing)
+	- [Solusi](#solusi2)
+	- [Testing](#testing2)
 - [Soal 3](#soal-3) <br>
 - [Soal 4](#soal-4) <br>
 - [Soal 5](#soal-5) <br>
