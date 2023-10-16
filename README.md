@@ -12,7 +12,8 @@ NADYA PERMATA SARI
 Prefix IP Kelompok E13: 10.43
 
 Soal:
-1.  Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut 
+1.  Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut.
+
 Kelompok E13 mendapatkan Topologi 08 sebagai berikut:
 
 <img width="470" alt="soal1" src="img/1.png">
@@ -138,13 +139,54 @@ Konfigurasi pada ArjunaLoadBalancer
 	netmask 255.255.255.0
 	gateway 10.43.2.1
  
+- Mengedit /root/.bashrc :
 
-- Restart semua Node
-- Di Router, nano /root/.bashrc terus kasih paling bawah:
+Router
 
-		iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.43.0.0/16
+	iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.43.0.0/16
 
-- Kalau butuh echo nameserver 192.168.122.1 > /etc/resolv.conf
+YudhistiraDNSMaster
+
+	echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+	apt-get update
+	apt-get install bind9 -y
+	service bind9 restart  
+	mkdir /etc/bind/arjuna    
+	mkdir /etc/bind/abimanyu
+
+WerkudaraDNSSlave
+
+	echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+	apt-get update
+	apt-get install bind9 -y
+	service bind9 restart 
+
+NakulaClient & SadewaClient
+
+	echo -e '
+	nameserver 10.43.2.2 # IP Yudhistira
+	nameserver 10.43.2.3 # IP Werkudara
+	nameserver 192.168.122.1
+	' > /etc/resolv.conf
+	apt-get update
+	apt-get install dnsutils -y
+	apt-get install lynx -y
+
+ArjunaLoadBalancer
+
+	echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+	apt-get update
+	apt-get install dnsutils -y
+	apt-get install lynx -y
+	apt-get install bind9 nginx -y
+	service nginx start
+
+AbimanyuWebServer, PrabukusumaWebserver, WisanggeniWebServer
+
+	echo nameserver 192.168.122.1 > /etc/resolv.conf
+	apt-get update
+	apt install nginx php php-fpm -y
+	php -v
 
 
 2. Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
