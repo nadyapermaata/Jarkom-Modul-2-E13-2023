@@ -14,6 +14,8 @@ NADYA PERMATA SARI
 	- [Solusi](#solusi)
 	- [Testing](#testing)
 - [Soal 2](#soal-2) <br>
+	- [Solusi](#solusi)
+	- [Testing](#testing)
 - [Soal 3](#soal-3) <br>
 - [Soal 4](#soal-4) <br>
 - [Soal 5](#soal-5) <br>
@@ -221,6 +223,8 @@ AbimanyuWebServer, PrabukusumaWebserver, WisanggeniWebServer
 <h3>Soal 2</h3>
 Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
 
+<h4>Solusi</h4>
+
 >>Di DNS Master yudhis:
 
 		 apt-get update
@@ -265,6 +269,7 @@ Kalau belom → echo nameserver 192.168.122.1 > /etc/resolv.conf
 	host -t CNAME www.arjuna.e13.com
 
 <img width="470" alt="soal1" src="img/2a.png">
+<h4>Testing</h4>
 
 <h3>Soal 3</h3>
 Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
