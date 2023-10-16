@@ -43,7 +43,7 @@ Prefix IP Kelompok E13: 10.43
 <h3>Soal 1</h3>
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut.
 
-<h4>Solusi</h4>
+<h4>Solusi</h4> <a name="solusi1"></a>
 Kelompok E13 mendapatkan Topologi 08 sebagai berikut:
 
 <img width="470" alt="soal1" src="img/1.png">
@@ -218,12 +218,12 @@ AbimanyuWebServer, PrabukusumaWebserver, WisanggeniWebServer
 	apt install nginx php php-fpm -y
 	php -v
 
-<h4>Testing</h4>
+<h4>Testing</h4> <a name="testing1"></a>
 
 <h3>Soal 2</h3>
 Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
 
-<h4>Solusi</h4>
+<h4>Solusi</h4> <a name="solusi2"></a>
 
 >>Di DNS Master yudhis:
 
@@ -269,7 +269,7 @@ Kalau belom → echo nameserver 192.168.122.1 > /etc/resolv.conf
 	host -t CNAME www.arjuna.e13.com
 
 <img width="470" alt="soal1" src="img/2a.png">
-<h4>Testing</h4>
+<h4>Testing</h4>  <a name="testing2"></a>
 
 <h3>Soal 3</h3>
 Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
