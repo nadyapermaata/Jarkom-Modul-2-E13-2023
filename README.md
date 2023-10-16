@@ -17,7 +17,7 @@ NADYA PERMATA SARI
 
 Prefix IP Kelompok E13: 10.43
 
-<a name="soal-1"><h3>Soal 1</h3> </a>
+<h3>Soal 1</h3>
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut.
 
 Kelompok E13 mendapatkan Topologi 08 sebagai berikut:
