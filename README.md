@@ -33,15 +33,163 @@
 
 Prefix IP Kelompok E13: 10.43
 
-<h3>Soal 1</h3>
+# <h3>Soal 1</h3>
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut.
 
-<h4>Solusi</h4> <a name="solusi1"></a>
+## <h4>Solusi</h4> <a name="solusi1"></a>
+    Hasil topologi yang telah dibuat adalah:
+    <img width="470" alt="soal1" src="img/1.png">
+
+## - Konfigurasi network:
+
+**Router**
+```
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 10.43.1.1
+	netmask 255.255.255.0
+
+auto eth2
+iface eth2 inet static
+	address 10.43.2.1
+	netmask 255.255.255.0
+```
+**NakulaClient**
+```
+auto eth0
+iface eth0 inet static
+	address 10.43.1.2
+	netmask 255.255.255.0
+	gateway 10.43.1.1
+```
+**SadewaClient**
+```
+auto eth0
+iface eth0 inet static
+	address 10.43.1.3
+	netmask 255.255.255.0
+	gateway 10.43.1.1
+```
+**AbimanyuWebServer**
+```auto eth0
+iface eth0 inet static
+	address 10.43.1.4
+	netmask 255.255.255.0
+	gateway 10.43.1.1
+```
+**PrabukusumaWebServer**
+```
+auto eth0
+iface eth0 inet static
+	address 10.43.1.5
+	netmask 255.255.255.0
+	gateway 10.43.1.1
+```
+**WisanggeniWebServer**
+```
+auto eth0
+iface eth0 inet static
+	address 10.43.1.6
+	netmask 255.255.255.0
+	gateway 10.43.1.1
+```
+**YudhistiraDNSMaster**
+```
+auto eth0
+iface eth0 inet static
+	address 10.43.2.2
+	netmask 255.255.255.0
+	gateway 10.43.2.1
+```
+**WerkudaraDNSSlave**
+```
+auto eth0
+iface eth0 inet static
+	address 10.43.2.3
+	netmask 255.255.255.0
+	gateway 10.43.2.1
+```
+**ArjunaLoadBalancer**
+```
+auto eth0
+iface eth0 inet static
+	address 10.43.2.4
+	netmask 255.255.255.0
+	gateway 10.43.2.1
+```
+
+- Melakukan pengeditan pada /root/.bashrc
+  
+**Router**
+```
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.43.0.0/16
+```
+**YudhistiraDNSMaster**
+```
+echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+apt-get update
+apt-get install bind9 -y
+service bind9 restart  
+mkdir /etc/bind/arjuna    
+mkdir /etc/bind/abimanyu
+```
+**WerkudaraDNSSlave**
+```
+echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+apt-get update
+apt-get install bind9 -y
+service bind9 restart 
+```
+**NakulaClient & SadewaClient**
+```
+echo -e '
+nameserver 10.43.2.2 # IP Yudhistira
+nameserver 10.43.2.3 # IP Werkudara
+nameserver 192.168.122.1
+' > /etc/resolv.conf
+apt-get update
+apt-get install dnsutils -y
+apt-get install lynx -y
+```
+**ArjunaLoadBalancer**
+```
+echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+apt-get update
+apt-get install dnsutils -y
+apt-get install lynx -y
+apt-get install bind9 nginx -y
+service nginx start
+```
+**AbimanyuWebServer, PrabukusumaWebserver, WisanggeniWebServer**
+```
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+apt-get update
+apt install nginx php php-fpm -y
+php -v
+```
+
 <h4>Testing</h4> <a name="testing1"></a>
+Pada Node lakukan:
+
+```
+ping google.com -c 5
+```
 
 <h3>Soal 2</h3>
 Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
 <h4>Solusi</h4> <a name="solusi2"></a>
+Pada `YudhistiraDNSMaster`, lakukan pengeditan `nano /etc/bind/named.conf.local`
+
+```
+zone "arjuna.e13.com" {
+	type master;
+	file "/etc/bind/jarkom/arjuna.e13.com";
+};
+```
+
 <h4>Testing</h4>  <a name="testing2"></a>
 
 <h3>Soal 3</h3>
