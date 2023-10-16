@@ -11,8 +11,29 @@ NADYA PERMATA SARI
 <h2>Daftar Isi</h2>
 
 - [Soal 1](#soal-1) <br>
+	- [Solusi](#solusi)
+	- [Testing](#testing)
 - [Soal 2](#soal-2) <br>
 - [Soal 3](#soal-3) <br>
+- [Soal 4](#soal-4) <br>
+- [Soal 5](#soal-5) <br>
+- [Soal 6](#soal-6) <br>
+- [Soal 7](#soal-7) <br>
+- [Soal 8](#soal-8) <br>
+- [Soal 9](#soal-9) <br>
+- [Soal 10](#soal-10) <br>
+- [Soal 11](#soal-11) <br>
+- [Soal 12](#soal-12) <br>
+- [Soal 13](#soal-13) <br>
+- [Soal 14](#soal-14) <br>
+- [Soal 15](#soal-15) <br>
+- [Soal 16](#soal-16) <br>
+- [Soal 17](#soal-17) <br>
+- [Soal 18](#soal-18) <br>
+- [Soal 19](#soal-19) <br>
+	- [Solusi](#solusi)
+	- [Testing](#testing)
+- [Soal 20](#soal-20) <br>
 - [Kendala](#kendala)
 
 Prefix IP Kelompok E13: 10.43
@@ -20,6 +41,7 @@ Prefix IP Kelompok E13: 10.43
 <h3>Soal 1</h3>
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut.
 
+<h4>Solusi</h4>
 Kelompok E13 mendapatkan Topologi 08 sebagai berikut:
 
 <img width="470" alt="soal1" src="img/1.png">
@@ -194,7 +216,9 @@ AbimanyuWebServer, PrabukusumaWebserver, WisanggeniWebServer
 	apt install nginx php php-fpm -y
 	php -v
 
-<a name="soal-2"><h3 name="soal-2">Soal 2</h3> </a>
+<h4>Testing</h4>
+
+<h3>Soal 2</h3>
 Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
 
 >>Di DNS Master yudhis:
@@ -242,8 +266,8 @@ Kalau belom → echo nameserver 192.168.122.1 > /etc/resolv.conf
 
 <img width="470" alt="soal1" src="img/2a.png">
 
-
-3. Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
+<h3>Soal 3</h3>
+Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
 
 >>Di DNS Master yudhis:
 
@@ -284,8 +308,8 @@ makedomain.sh
 
 <img width="470" alt="soal1" src="img/3a.png">
 
-
-4. Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
+<h3>Soal 4</h3>
+Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
 
 nano /etc/bind/jarkom/jarkom
 
@@ -299,12 +323,14 @@ nano /etc/bind/jarkom/jarkom
 <img width="470" alt="soal1" src="img/4a.png">
 
 
-5. Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
+<h3>Soal 5</h3>
+Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
 
 <img width="470" alt="soal1" src="img/5.png">
 <img width="470" alt="soal1" src="img/5a.png">
 
-6. Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
+<h3>Soal 6</h3>
+Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
 
    
 >>Yudhistira:
@@ -376,7 +402,8 @@ lalu tambahkan:
 <img width="470" alt="soal1" src="img/6.png">
 
 
-7. Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
+<h3>Soal 7</h3>
+Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
 
 
 >>Yudhistira:
@@ -448,7 +475,8 @@ comment dnssec-validation auto; dan tambahkan baris berikut pada /etc/bind/named
 <img width="470" alt="soal1" src="img/7b.png">
 
 
-8. Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
+<h3>Soal 8</h3>
+Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
 
    
    
@@ -470,7 +498,8 @@ comment dnssec-validation auto; dan tambahkan baris berikut pada /etc/bind/named
 <img width="470" alt="soal1" src="img/8a.png">
 
 
-9. Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
+<h3>Soal 9</h3>
+Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
 
 >>LB ARJUNA
 
@@ -612,7 +641,8 @@ lynx http://10.43.1.6
 
 <img width="470" alt="soal1" src="img/9c.png">
 
-10. Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
+<h3>Soal 10</h3>
+Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
     - Prabakusuma:8001
     - Abimanyu:8002
     - Wisanggeni:8003
@@ -696,6 +726,29 @@ lynx http://10.43.2.4
 lynx http://arjuna.e13.com
 
 <img width="470" alt="soal1" src="img/10.png">
+
+<h3>Soal 11</h3>
+
+<h3>Soal 12</h3>
+
+<h3>Soal 13</h3>
+
+<h3>Soal 14</h3>
+
+<h3>Soal 15</h3>
+
+<h3>Soal 16</h3>
+
+<h3>Soal 17</h3>
+
+<h3>Soal 18</h3
+
+<h4>Solusi</h4>
+<h4>Testing</h4>
+
+<h3>Soal 19</h3>
+
+<h3>Soal 20</h3>
 
 
 
