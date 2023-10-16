@@ -581,12 +581,15 @@ lynx http://10.43.1.6
 ```
 
 lynx http://10.43.1.4
+
 <img width="470" alt="soal1" src="img/9a.png">
 
 lynx http://10.43.1.5
+
 <img width="470" alt="soal1" src="img/9b.png">
 
 lynx http://10.43.1.6
+
 <img width="470" alt="soal1" src="img/9c.png">
 
 <h3>Soal 10</h3>
@@ -650,12 +653,15 @@ lynx http://10.43.1.6:8003
 ```
 
 lynx http://10.43.1.4
+
 <img width="470" alt="soal1" src="img/9a.png">
 
 lynx http://10.43.1.5
+
 <img width="470" alt="soal1" src="img/9b.png">
 
 lynx http://10.43.1.6
+
 <img width="470" alt="soal1" src="img/9c.png">
 
 
