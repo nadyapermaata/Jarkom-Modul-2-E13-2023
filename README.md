@@ -11,6 +11,9 @@
 |----------|----------|----------|
 | [Soal 1](#soal-1) | [Solusi](#solusi1) | [Testing](#testing1) |
 | [Soal 2](#soal-2) | [Solusi](#solusi2) | [Testing](#testing2) |
+| [Soal 3](#soal-3) | [Solusi](#solusi3) | [Testing](#testing3) |
+| [Soal 4](#soal-4) | [Solusi](#solusi4) | [Testing](#testing4) |
+| [Soal 5](#soal-5) | [Solusi](#solusi5) | [Testing](#testing5) |
 
 - [Soal 1](#soal-1) <br>
 	- [Solusi](#solusi1)
