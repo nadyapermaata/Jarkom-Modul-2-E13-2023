@@ -222,37 +222,372 @@ host -t CNAME www.arjuna.e13.com
 <h3>Soal 3</h3>
 Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
 <h4>Solusi</h4> <a name="solusi3"></a>
+
+- YudhistiraDNSMaster
+
+lakukan pengeditan `nano /etc/bind/named.conf.local`
+
+```
+zone "abimanyu.e13.com" {
+	type master;
+	file "/etc/bind/jarkom/abimanyu.e13.com";
+};
+```
+Lalu lanjutkan
+```
+cp /etc/bind/db.local /etc/bind/jarkom/abimanyu.e13.com
+```
+lakukan pengeditan `nano /etc/bind/jarkom/abimanyu.e13.com`
+
+<img width="470" alt="soal1" src="img/3.png">
+
+```
+service bind9 restart
+```
 <h4>Testing</h4>  <a name="testing3"></a>
+
+- NakulaClient
+
+```ping abimanyu.e13.com -c  5
+ping www.abimanyu.e13.com -c 5
+host -t CNAME www.abimanyu.e13.com
+```
+
+<img width="470" alt="soal1" src="img/3a.png">
+
 
 <h3>Soal 4</h3>
 Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
 <h4>Solusi</h4> <a name="solusi4"></a>
+
+- YudhistiraDNSMaster
+
+lakukan pengeditan `nano /etc/bind/jarkom/abimanyu.e13.com`
+
+<img width="470" alt="soal1" src="img/4.png">
+
+service bind9 restart
+
 <h4>Testing</h4>  <a name="testing4"></a>
+
+- NakulaClient
+
+```
+ping parikesit.abimanyu.e13.com -c 5
+```
+<img width="470" alt="soal1" src="img/4a.png">
+
 
 <h3>Soal 5</h3>
 Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
 <h4>Solusi</h4> <a name="solusi5"></a>
+
+- YudhistiraDNSMaster
+
+lakukan pengeditan `nano /etc/bind/named.conf.local`
+
+```
+zone "1.43.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/jarkom/1.43.10.in-addr.arpa";
+};
+```
+
+Kemudian lanjutkan
+```
+cp /etc/bind/db.local /etc/bind/jarkom/1.43.10.in-addr.arpa
+```
+Lalu, lakukan pengeditan `nano /etc/bind/jarkom/1.43.10.in-addr.arpa`
+
+<img width="470" alt="soal1" src="img/5.png">
+
+service bind9 restart
+
 <h4>Testing</h4>  <a name="testing5"></a>
+
+- NakulaClient
+  
+```
+host -t PTR 10.43.1.4
+```
+
+<img width="470" alt="soal1" src="img/5a.png">
+
 
 <h3>Soal 6</h3>
 Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
 <h4>Solusi</h4> <a name="solusi6"></a>
+
+- YudhistiraDNSMaster
+
+lakukan pengeditan `nano /etc/bind/named.conf.local`
+
+```
+zone "arjuna.e13.com" {
+    type master;
+    notify yes;
+    also-notify { 10.43.2.3; }; //IP Werkudara
+    allow-transfer { 10.43.2.3; }; //IP Werkudara
+    file "/etc/bind/jarkom/arjuna.e13.com";
+};
+zone "abimanyu.e13.com" {
+    type master;
+    notify yes;
+    also-notify { 10.43.2.3; }; //IP Werkudara
+    allow-transfer { 10.43.2.3; }; //IP Werkudara
+    file "/etc/bind/jarkom/abimanyu.e13.com";
+};
+```
+
+service bind9 restart
+
+- WerkudaraDNSSlave
+  
+lakukan pengeditan `nano /etc/bind/named.conf.local`
+
+```
+zone "arjuna.e13.com" {
+    type slave;
+    masters { 10.43.2.2; }; // IP Yudhistira
+    file "/var/lib/bind/arjuna.e13.com";
+};
+
+zone "abimanyu.e13.com" {
+    type slave;
+    masters { 10.43.2.2; }; // IP Yudhistira
+    file "/var/lib/bind/abimanyu.e13.com";
+};
+```
+service bind9 restart
+
+- YudhistiraDNSMaster
+
+service bind9 stop
+
 <h4>Testing</h4>  <a name="testing6"></a>
+
+- NakulaClient
+  
+```
+ping arjuna.e13.com -c 5
+ping www.abimanyu.e13.com -c 5
+ping parikesit.abimanyu.e13.com -c 5
+```
+
+<img width="470" alt="soal1" src="img/6.png">
+
+
 
 <h3>Soal 7</h3>
 Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
 <h4>Solusi</h4> <a name="solusi7"></a>
+
+- YudhistiraDNSMaster
+  
+Lakukan Pengeditan  `nano /etc/bind/jarkom/abimanyu.e13.com`
+
+<img width="470" alt="soal1" src="img/7.png">
+
+Lakukan pengeditan ` nano /etc/bind/named.conf.options`
+
+```
+comment dnssec-validation auto; dan tambahkan allow-query{any;};
+```
+
+Lakukan Pengeditan  `nano /etc/bind/named.conf.local`
+
+```
+zone "abimanyu.e13.com" {
+        type master;
+        //notify yes;
+        //also-notify {10.45.2.3;};  
+        allow-transfer {10.43.2.3;}; // IP Werkudara
+        file "/etc/bind/jarkom/abimanyu.e13.com";
+};
+```
+
+service bind9 restart
+
+- WerkudaraDNSSlave
+  
+Lakukan Pengeditan  `nano /etc/bind/named.conf.options`  
+```
+comment dnssec-validation auto; dan tambahkan baris allow-query{any;};
+```
+
+Lakukan Pengeditan  `nano /etc/bind/named.conf.local`  
+
+```
+zone "baratayuda.abimanyu.e13.com"{  
+        type master;
+        file "/etc/bind/Baratayuda/baratayuda.abimanyu.e13.com";
+};  
+```
+Kemudian lanjutkan,
+```
+mkdir /etc/bind/Baratayuda
+cp /etc/bind/db.local /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
+```
+
+Lakukan Pengeditan  `nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com`  
+
+<img width="470" alt="soal1" src="img/7a.png">
+
 <h4>Testing</h4>  <a name="testing7"></a>
+
+- NakulaClient
+  
+```
+ping baratayuda.abimanyu.e13.com -c 5
+ping www.baratayuda.abimanyu.e13.com -c 5
+```
+
+<img width="470" alt="soal1" src="img/7b.png">
+
+
 
 <h3>Soal 8</h3>
 Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
 <h4>Solusi</h4> <a name="solusi8"></a>
+
+- WerkudaraDNSSlave
+  
+Lakukan Pengeditan  `nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com`   
+
+<img width="470" alt="soal1" src="img/8.png">
+
+service bind9 restart
+
 <h4>Testing</h4>  <a name="testing8"></a>
+
+- NakulaClient
+  
+```
+host -t CNAME www.rjp.baratayuda.abimanyu.e13.com
+ping rjp.baratayuda.abimanyu.e13.com -c 5
+ping www.rjp.baratayuda.abimanyu.e13.com -c 5
+host -t A rjp.baratayuda.abimanyu.e13.com
+```
+
+<img width="470" alt="soal1" src="img/8a.png">
 
 <h3>Soal 9</h3>
 Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
 <h4>Solusi</h4> <a name="solusi9"></a>
+
+- Workers (AbimanyuWebServer, PrabukusumaWebServer, WisanggeniWebServer)
+  
+Lakukan Pengeditan  `nano /var/www/jarkom/index.php`   
+
+```
+<?php
+$hostname = gethostname();
+$date = date('Y-m-d H:i:s');
+$php_version = phpversion();
+$username = get_current_user();
+
+
+echo "Hello World!<br>";
+echo "Saya adalah: $username<br>";
+echo "Saat ini berada di: $hostname<br>";
+echo "Versi PHP yang saya gunakan: $php_version<br>";
+echo "Tanggal saat ini: $date<br>";
+?>
+```
+
+service php7.2-fpm start
+
+Lakukan Pengeditan  `nano /etc/nginx/sites-available/jarkom`   
+```
+server {
+        listen 80; 
+
+        root /var/www/jarkom;
+        index index.php index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+        }
+
+        location ~ /\.ht {
+                deny all;
+        }
+}
+```
+
+Lalu lanjutkan dengan pembuatan symlink dan penghapusan file `/etc/nginx/sites-enabled/default`    
+```
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled
+rm /etc/nginx/sites-enabled/default
+```
+
+service nginx restart
+
+Periksa Konfigurasi
+```
+nginx -t
+```
+
+- ArjunaLoadBalancer
+  
+Lakukan Pengeditan  `nano /etc/nginx/sites-available/jarkom`   
+
+```
+upstream myweb{
+  server 10.43.1.4; # IP Abimanyu
+  server 10.43.1.5; # IP Prabukusuma
+  server 10.43.1.6; # IP Wisanggeni
+}
+
+server {
+  listen 80;
+  server_name arjuna.e13.com www.arjuna.e13.com;
+
+  location / {
+    proxy_pass http://myweb;
+  }
+}
+```
+
+Lalu lanjutkan dengan pembuatan symlink dan penghapusan file `/etc/nginx/sites-enabled/default`    
+
+```
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled
+rm /etc/nginx/sites-enabled/default
+```
+
+service nginx restart
+
+Periksa Konfigurasi
+
+```
+nginx -t
+```
+
 <h4>Testing</h4>  <a name="testing9"></a>
+
+- SadewaClient
+```
+lynx http://10.43.1.4
+lynx http://10.43.1.5
+lynx http://10.43.1.6
+```
+
+lynx http://10.43.1.4
+<img width="470" alt="soal1" src="img/9a.png">
+
+lynx http://10.43.1.5
+<img width="470" alt="soal1" src="img/9b.png">
+
+lynx http://10.43.1.6
+<img width="470" alt="soal1" src="img/9c.png">
 
 <h3>Soal 10</h3>
 Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
@@ -260,7 +595,69 @@ Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan 
     - Abimanyu:8002
     - Wisanggeni:8003
 <h4>Solusi</h4> <a name="solusi10"></a>
+
+- Workers (AbimanyuWebServer, PrabukusumaWebServer, WisanggeniWebServer)
+
+Lakukan Pengeditan  `nano /etc/nginx/sites-available/jarkom`   
+
+Mengganti 80 menjadi 8001/8002/8003. Sebagai contoh:
+
+```
+listen 8001; //Abimanyu
+```
+
+service nginx restart
+
+Periksa Konfigurasi
+```
+nginx -t
+```
+
+- ArjunaLoadBalancer
+  
+Lakukan Pengeditan  `nano /etc/nginx/sites-available/jarkom`   
+```
+upstream myweb{
+ 	server 10.43.1.4:8001; #IP Abimanyu
+ 	server 10.43.1.5:8002; #IP Prabukusuma
+	server 10.43.1.6:8003; #IP Wisanggeni
+}
+
+server {
+  listen 80;
+  server_name arjuna.e13.com www.arjuna.e13.com;
+
+  location / {
+    proxy_pass http://myweb;
+  }
+}
+```
+
+service nginx restart
+
+Periksa Konfigurasi
+```
+nginx -t
+```
+
 <h4>Testing</h4>  <a name="testing10"></a>
+
+- SadewaClient
+```
+lynx http://10.43.1.4:8001
+lynx http://10.43.1.5:8002
+lynx http://10.43.1.6:8003
+```
+
+lynx http://10.43.1.4
+<img width="470" alt="soal1" src="img/9a.png">
+
+lynx http://10.43.1.5
+<img width="470" alt="soal1" src="img/9b.png">
+
+lynx http://10.43.1.6
+<img width="470" alt="soal1" src="img/9c.png">
+
 
 <h3>Soal 11</h3>
 Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
