@@ -1,4 +1,4 @@
-# Jarkom-Modul-2-E13-2023
+<h1> Jarkom-Modul-2-E13-2023 </h1>
 
 E13
 
@@ -8,11 +8,17 @@ Najma Ulya Agustina
 5025201015
 NADYA PERMATA SARI
 
+<h2>Daftar Isi</h2>
+
+- [Soal 1](#soal-1) <br>
+- [Soal 2](#soal-2) <br>
+- [Soal 3](#soal-3) <br>
+- [Kendala](#kendala)
 
 Prefix IP Kelompok E13: 10.43
 
-Soal:
-1.  Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut.
+<a name="soal-1"><h3>Soal 1</h3> </a>
+Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut.
 
 Kelompok E13 mendapatkan Topologi 08 sebagai berikut:
 
@@ -188,8 +194,8 @@ AbimanyuWebServer, PrabukusumaWebserver, WisanggeniWebServer
 	apt install nginx php php-fpm -y
 	php -v
 
-
-2. Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
+<a name="soal-2"><h3 name="soal-2">Soal 2</h3> </a>
+Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
 
 >>Di DNS Master yudhis:
 
