@@ -33,14 +33,14 @@
 
 Prefix IP Kelompok E13: 10.43
 
-# <h3>Soal 1</h3>
+<h3>Soal 1</h3>
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut.
 
-## <h4>Solusi</h4> <a name="solusi1"></a>
+<h4>Solusi</h4> <a name="solusi1"></a>
     Hasil topologi yang telah dibuat adalah:
     <img width="470" alt="soal1" src="img/1.png">
 
-## - Konfigurasi network:
+- Konfigurasi network:
 
 **Router**
 ```
@@ -181,7 +181,10 @@ ping google.com -c 5
 <h3>Soal 2</h3>
 Buatlah website utama dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
 <h4>Solusi</h4> <a name="solusi2"></a>
-Pada `YudhistiraDNSMaster`, lakukan pengeditan `nano /etc/bind/named.conf.local`
+
+- YudhistiraDNSMaster
+
+lakukan pengeditan `nano /etc/bind/named.conf.local`
 
 ```
 zone "arjuna.e13.com" {
@@ -189,8 +192,31 @@ zone "arjuna.e13.com" {
 	file "/etc/bind/jarkom/arjuna.e13.com";
 };
 ```
+Lalu lanjutkan
+```
+mkdir /etc/bind/jarkom
+```
+```
+cp /etc/bind/db.local /etc/bind/jarkom/arjuna.e13.com
+```
+lakukan pengeditan `nano /etc/bind/jarkom/arjuna.e13.com`
+
+<img width="470" alt="soal1" src="img/2.png">
+
+```
+service bind9 restart
+```
 
 <h4>Testing</h4>  <a name="testing2"></a>
+- NakulaClient
+
+```
+ping arjuna.e13.com -c  5
+ping www.arjuna.e13.com -c 5
+host -t CNAME www.arjuna.e13.com
+```
+
+<img width="470" alt="soal1" src="img/2.png">
 
 <h3>Soal 3</h3>
 Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
