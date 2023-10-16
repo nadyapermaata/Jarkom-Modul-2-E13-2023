@@ -1,11 +1,16 @@
 <h1> Jarkom-Modul-2-E13-2023 </h1>
 
-| No| Nama | NRP |
+| No | Nama | NRP |
 |----------|----------|----------|
 | 1 | Nadya Permata Sari | 5025201015 |
 | 2 | Najma Ulya Agustina | 5025211239 |
 
 <h2>Daftar Isi</h2>
+
+| Soal | Solusi | Testing |
+|----------|----------|----------|
+| [Soal 1](#soal-1) | [Solusi](#solusi1) | [Testing](#testing1) |
+| [Soal 2](#soal-2) | [Solusi](#solusi2) | [Testing](#testing2) |
 
 - [Soal 1](#soal-1) <br>
 	- [Solusi](#solusi1)
