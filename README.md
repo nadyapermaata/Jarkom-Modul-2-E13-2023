@@ -668,49 +668,483 @@ lynx http://10.43.1.6
 <h3>Soal 11</h3>
 Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
 <h4>Solusi</h4> <a name="solusi11"></a>
+
+- AbimanyuWebServer
+
+Lakukan langkah-langkah berikut untuk penginstalan apache2, php dan juga wget
+
+```
+apt-get update
+apt-get install apache2 -y
+apt-get install php -y
+apt-get install libapache2-mod-php7.0 -y
+service apache2 start
+apt-get install wget -y
+apt-get install unzip -y
+```
+
+Download dan unzip file dalam google drive
+
+```
+wget -O '/var/www/abimanyu.e13.com' 'https://drive.usercontent.google.com/download?id=1a4V23hwK9S7hQEDEcv9FL14UkkrHc-Zc'
+unzip -o /var/www/abimanyu.e13.com -d /var/www/
+```  
+
+Kemudian lanjutkan dengan command berikut:
+
+```
+mv /var/www/abimanyu.yyy.com /var/www/abimanyu.e13
+rm /var/www/abimanyu.e13.com
+rm -rf /var/www/abimanyu.yyy.com
+```
+
+Copy file  `/etc/apache2/sites-available/000-default.conf`   ke  `/etc/apache2/sites-available/abimanyu.e13.com.conf`   
+
+```
+cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/abimanyu.e13.com.conf
+```
+
+Hapus file 000-default.conf
+
+```
+rm /etc/apache2/sites-available/000-default.conf
+```
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/abimanyu.e13.com.conf`   
+
+```
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/abimanyu.e13
+
+  ServerName abimanyu.e13.com
+  ServerAlias www.abimanyu.e13.com
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Aktifkan Konfigurasi website yang telah dibuat
+
+```
+a2ensite abimanyu.e13.com.conf
+```
+
+service apache2 restart
+
 <h4>Testing</h4>  <a name="testing11"></a>
+
+- NakulaClient
+```
+lynx abimanyu.e13.com
+```
+
+<img width="470" alt="soal1" src="img/11.png">
 
 <h3>Soal 12</h3>
 Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
 <h4>Solusi</h4> <a name="solusi12"></a>
+
+- AbimanyuWebServer
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/abimanyu.e13.com.conf`
+lalu tambahkan:
+
+```
+<Directory /var/www/abimanyu.e13/index.php/home>
+  Options +Indexes
+</Directory>
+
+Alias "/home" "/var/www/abimanyu.e13/index.php/home"
+```
+
+service apache2 restart
+
 <h4>Testing</h4>  <a name="testing12"></a>
+
+- NakulaClient
+```
+lynx abimanyu.e13.com/home
+```
+<img width="470" alt="soal1" src="img/12.png">
 
 <h3>Soal 13</h3>
 Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
 <h4>Solusi</h4> <a name="solusi13"></a>
+
+- AbimanyuWebServer
+  
+Download dan unzip file gdrive
+
+```
+wget -O '/var/www/parikesit.abimanyu.e13.com' 'https://drive.usercontent.google.com/download?id=1LdbYntiYVF_NVNgJis1GLCLPEGyIOreS'
+unzip -o /var/www/parikesit.abimanyu.e13.com -d /var/www/
+```
+
+Kemudian, lanjutkan dengan command berikut
+
+```
+mv /var/www/parikesit.abimanyu.yyy.com /var/www/parikesit.abimanyu.e13
+rm /var/www/parikesit.abimanyu.e13.com
+rm -rf /var/www/parikesit.abimanyu.yyy.com
+```
+Buat file secret dalam direktori /var/www
+
+```
+mkdir /var/www/parikesit.abimanyu.e13/secret
+```
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/parikesit.abimanyu.e13.com.conf`
+
+```
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/parikesit.abimanyu.e13
+  ServerName parikesit.abimanyu.e13.com
+  ServerAlias www.parikesit.abimanyu.e13.com
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>'
+```
+
+Aktifkan File Konfigurasi
+
+```
+a2ensite parikesit.abimanyu.e13.com.conf
+```
+
+service apache2 restart
+
 <h4>Testing</h4>  <a name="testing13"></a>
+
+- NakulaClient
+  
+```
+lynx parikesit.abimanyu.e13.com
+```
+<img width="470" alt="soal1" src="img/13.png">
 
 <h3>Soal 14</h3>
 Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
 <h4>Solusi</h4> <a name="solusi14"></a>
+
+- AbimanyuWebServer
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/parikesit.abimanyu.e13.com.conf`
+lalu tambahkan:
+
+```
+  <Directory /var/www/parikesit.abimanyu.e13/public>
+          Options +Indexes
+  </Directory>
+
+  <Directory /var/www/parikesit.abimanyu.e13/secret>
+          Options -Indexes
+  </Directory>
+
+  Alias "/public" "/var/www/parikesit.abimanyu.e13/public"
+  Alias "/secret" "/var/www/parikesit.abimanyu.e13/secret"
+```
+
+service apache2 restart
+
 <h4>Testing</h4>  <a name="testing14"></a>
+
+- NakulaClient
+
+```
+lynx parikesit.abimanyu.e13.com/public
+lynx parikesit.abimanyu.e13.com/secret
+```
+lynx parikesit.abimanyu.e13.com/public
+
+<img width="470" alt="soal1" src="img/14a.png">
+
+lynx parikesit.abimanyu.e13.com/secret
+
+<img width="470" alt="soal1" src="img/14b.png">
 
 <h3>Soal 15</h3>
 Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
 <h4>Solusi</h4> <a name="solusi15"></a>
+
+- AbimanyuWebServer
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/parikesit.abimanyu.e13.com.conf`
+latu tambahkan:
+
+```
+ErrorDocument 404 /error/404.html
+ErrorDocument 403 /error/403.html
+```
+
+service apache2 restart
+
 <h4>Testing</h4>  <a name="testing15"></a>
+
+- NakulaClient
+```
+lynx parikesit.abimanyu.e13.com/testerror
+lynx parikesit.abimanyu.e13.com/secret
+```
+lynx parikesit.abimanyu.e13.com/testerror
+
+<img width="470" alt="soal1" src="img/15a.png">
+
+lynx parikesit.abimanyu.e13.com/secret
+
+<img width="470" alt="soal1" src="img/15b.png">
 
 <h3>Soal 16</h3>
 Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi www.parikesit.abimanyu.yyy.com/js
 <h4>Solusi</h4> <a name="solusi16"></a>
+
+- AbimanyuWebServer
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/parikesit.abimanyu.e13.com.conf`
+lalu tambahkan:
+
+```
+ Alias "/js" "/var/www/parikesit.abimanyu.e13/public/js"
+```
+
+service apache2 restart
+
 <h4>Testing</h4>  <a name="testing16"></a>
+
+- NakulaClient
+  
+```
+lynx parikesit.abimanyu.e13.com/public/js
+lynx parikesit.abimanyu.e13.com/js
+```
+
+Hasil Sama:
+
+<img width="470" alt="soal1" src="img/16.png">
+
 
 <h3>Soal 17</h3>
 Agar aman, buatlah konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
 <h4>Solusi</h4> <a name="solusi17"></a>
+
+- AbimanyuWebServer
+  
+Buat file direktori baratayuda.abimanyu.e13
+  
+```
+mkdir /var/www/rjp.baratayuda.abimanyu.e13
+```
+Download file gdrive
+
+```
+wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1pPSP7yIR05JhSFG67RVzgkb-VcW9vQO6" -O /var/www/rjp.baratayuda.abimanyu.e13/rjp.baratayuda.abimanyu.e13.com.zip
+```
+Unzip file
+  
+```
+unzip /var/www/rjp.baratayuda.abimanyu.e13/rjp.baratayuda.abimanyu.e13.com.zip -d /var/www/rjp.baratayuda.abimanyu.e13/
+```
+
+Kemudian lanjutkan dengan baris perintah berikut:
+```
+mv /var/www/rjp.baratayuda.abimanyu.e13/rjp.baratayuda.abimanyu.yyy.com/anya-bond.webp /var/www/rjp.baratayuda.abimanyu.e13/
+mv /var/www/rjp.baratayuda.abimanyu.e13/rjp.baratayuda.abimanyu.yyy.com/loid.png /var/www/rjp.baratayuda.abimanyu.e13/
+mv /var/www/rjp.baratayuda.abimanyu.e13/rjp.baratayuda.abimanyu.yyy.com/waku.mp3 /var/www/rjp.baratayuda.abimanyu.e13/
+mv /var/www/rjp.baratayuda.abimanyu.e13/rjp.baratayuda.abimanyu.yyy.com/yor.jpg /var/www/rjp.baratayuda.abimanyu.e13/
+
+rm -r /var/www/rjp.baratayuda.abimanyu.e13/rjp.baratayuda.abimanyu.e13.com.zip
+rm -r /var/www/rjp.baratayuda.abimanyu.e13/rjp.baratayuda.abimanyu.yyy.com/
+```
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/rjp.baratayuda.abimanyu.e13.com.conf`
+lalu tambahkan:
+
+```
+<VirtualHost *:14000 *:14400>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/rjp.baratayuda.abimanyu.e13
+  ServerName rjp.baratayuda.abimanyu.e13.com
+  ServerAlias www.rjp.baratayuda.abimanyu.e13.com
+
+  ErrorDocument 404 /error/404.html
+  ErrorDocument 403 /error/403.html
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Lakukan pengeditan  `nano /etc/apache2/ports.conf`
+tambahkan:
+  
+```
+Listen 14000
+Listen 14400
+```
+
+Aktifkan file konfigurasi
+
+```
+a2ensite rjp.baratayuda.abimanyu.e13.com.conf
+```
+
+service apache2 restart
+
 <h4>Testing</h4>  <a name="testing17"></a>
+
+- NakulaClient
+  
+```
+lynx rjp.baratayuda.abimanyu.e13.com:14000
+lynx rjp.baratayuda.abimanyu.e13.com:14400
+lynx rjp.baratayuda.abimanyu.e13.com:88000
+```
+
+lynx rjp.baratayuda.abimanyu.e13.com:14000
+
+<img width="470" alt="soal1" src="img/17a.png">
+
+lynx rjp.baratayuda.abimanyu.e13.com:14400
+
+<img width="470" alt="soal1" src="img/17b.png">
+
+lynx rjp.baratayuda.abimanyu.e13.com:88000
+
+<img width="470" alt="soal1" src="img/17c.png">
 
 <h3>Soal 18</h3
 Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
 <h4>Solusi</h4> <a name="solusi18"></a>
+
+- AbimanyuWebServer
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/rjp.baratayuda.abimanyu.e13.com.conf`
+
+Tambahkan:
+```
+ <Directory /var/www/rjp.baratayuda.abimanyu.e13>
+          AuthType Basic
+          AuthName "Restricted Content"
+          AuthUserFile /etc/apache2/.htsecure
+          Require valid-user
+  </Directory>
+```
+
+Kemudian, lanjutkan dengan baris perintah berikut
+```
+htpasswd -c -b /etc/apache2/.htsecure Wayang baratayudae13
+```
+
+Aktifkan file konfigurasi
+```
+a2ensite rjp.baratayuda.abimanyu.e13.com.conf
+```
+
+service apache2 restart
+
 <h4>Testing</h4>  <a name="testing18"></a>
+
+- NakulaClient
+  
+```
+lynx rjp.baratayuda.abimanyu.e13.com:14000
+```
+
+<img width="470" alt="soal1" src="img/18a.png">
+
+<img width="470" alt="soal1" src="img/18b.png">
+
+<img width="470" alt="soal1" src="img/18c.png">
+
 
 <h3>Soal 19</h3>
 Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
 <h4>Solusi</h4> <a name="solusi19"></a>
+
+- AbimanyuWebServer
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/000-default.conf`
+
+```
+<VirtualHost *:80>
+    ServerAdmin webmaster@abimanyu.e13.com
+    DocumentRoot /var/www/html
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    Redirect / http://www.abimanyu.e13.com/
+</VirtualHost>
+```
+```
+apache2ctl configtest
+```
+
+service apache2 restart
+
+
 <h4>Testing</h4>  <a name="testing19"></a>
+
+- NakulaClient
+
+```
+lynx 10.43.1.4
+```
+<img width="470" alt="soal1" src="img/19.png">
 
 <h3>Soal 20</h3>
 Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
 <h4>Solusi</h4> <a name="solusi20"></a>
+
+- AbimanyuWebServer
+
+Aktifkan modul rewrite
+
+```
+a2enmod rewrite
+```
+	
+Lakukan pengeditan  `nano /var/www/parikesit.abimanyu.e13/.htaccess`	
+
+ ```
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/public/images/(.*)(abimanyu)(.*\.(png|jpg))
+RewriteCond %{REQUEST_URI} !/public/images/abimanyu.png
+RewriteRule abimanyu http://parikesit.abimanyu.e13.com/public/images/abimanyu.png$1 [L,R=301]
+```
+
+Lakukan pengeditan  `nano /etc/apache2/sites-available/parikesit.abimanyu.e13.com.conf`
+tambahkan:	
+
+```
+ <Directory /var/www/parikesit.abimanyu.e13>
+          Options +FollowSymLinks -Multiviews
+          AllowOverride All
+  </Directory>
+```
+Aktifkan modul rewrite
+```
+a2enmod rewrite
+```
+
+service apache2 restart
+
 <h4>Testing</h4>  <a name="testing20"></a>
+
+- NakulaClient
+  
+```
+lynx parikesit.abimanyu.e13.com/public/images/not-abimanyu.png
+lynx parikesit.abimanyu.e13.com/public/images/abimanyu-student.jpg
+lynx parikesit.abimanyu.e13.com/public/images/abimanyu.png
+lynx parikesit.abimanyu.e13.com/public/images/buddies.jpg
+lynx parikesit.abimanyu.e13.com/public/images/elegance-abim.jpg
+lynx parikesit.abimanyu.e13.com/public/images/desmondwawklkl.sakdae
+lynx parikesit.abimanyu.e13.com/public/images/notabimanyujustmuseum.177013
+```
+<img width="470" alt="soal1" src="img/20a.png">
+
+<img width="470" alt="soal1" src="img/20b.png">
