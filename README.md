@@ -38,7 +38,7 @@ Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjun
 
 <h4>Solusi</h4> <a name="solusi1"></a>
     Hasil topologi yang telah dibuat adalah:
-    <img width="470" alt="soal1" src="images/1.png">
+    <img width="470" alt="soal1" src="images/1a.png">
 
 - Konfigurasi network:
 
