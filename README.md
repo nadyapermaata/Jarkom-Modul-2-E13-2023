@@ -740,7 +740,7 @@ service apache2 restart
 lynx abimanyu.e13.com
 ```
 
-<img width="470" alt="soal1" src="images/11.png">
+<img width="470" alt="soal1" src="images/11a.png">
 
 <h3>Soal 12</h3>
 Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
@@ -860,11 +860,11 @@ lynx parikesit.abimanyu.e13.com/secret
 ```
 lynx parikesit.abimanyu.e13.com/public
 
-<img width="470" alt="soal1" src="images/14a.png">
+<img width="470" alt="soal1" src="images/14.png">
 
 lynx parikesit.abimanyu.e13.com/secret
 
-<img width="470" alt="soal1" src="images/14b.png">
+<img width="470" alt="soal1" src="images/14a.png">
 
 <h3>Soal 15</h3>
 Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
@@ -891,11 +891,11 @@ lynx parikesit.abimanyu.e13.com/secret
 ```
 lynx parikesit.abimanyu.e13.com/testerror
 
-<img width="470" alt="soal1" src="img/15a.png">
+<img width="470" alt="soal1" src="images/15.png">
 
 lynx parikesit.abimanyu.e13.com/secret
 
-<img width="470" alt="soal1" src="images/15b.png">
+<img width="470" alt="soal1" src="images/15a.png">
 
 <h3>Soal 16</h3>
 Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi www.parikesit.abimanyu.yyy.com/js
@@ -1053,11 +1053,11 @@ service apache2 restart
 lynx rjp.baratayuda.abimanyu.e13.com:14000
 ```
 
+<img width="470" alt="soal1" src="images/18.png">
+
 <img width="470" alt="soal1" src="images/18a.png">
 
 <img width="470" alt="soal1" src="images/18b.png">
-
-<img width="470" alt="soal1" src="images/18c.png">
 
 
 <h3>Soal 19</h3>
@@ -1145,6 +1145,6 @@ lynx parikesit.abimanyu.e13.com/public/images/elegance-abim.jpg
 lynx parikesit.abimanyu.e13.com/public/images/desmondwawklkl.sakdae
 lynx parikesit.abimanyu.e13.com/public/images/notabimanyujustmuseum.177013
 ```
-<img width="470" alt="soal1" src="images/20a.png">
+<img width="470" alt="soal1" src="images/20.png">
 
-<img width="470" alt="soal1" src="images/20b.png">
+<img width="470" alt="soal1" src="images/20a.png">
