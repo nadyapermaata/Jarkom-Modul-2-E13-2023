@@ -38,7 +38,7 @@ Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjun
 
 <h4>Solusi</h4> <a name="solusi1"></a>
     Hasil topologi yang telah dibuat adalah:
-    <img width="470" alt="soal1" src="img/1.png">
+    <img width="470" alt="soal1" src="images/1.png">
 
 - Konfigurasi network:
 
@@ -201,7 +201,7 @@ cp /etc/bind/db.local /etc/bind/jarkom/arjuna.e13.com
 ```
 lakukan pengeditan `nano /etc/bind/jarkom/arjuna.e13.com`
 
-<img width="470" alt="soal1" src="img/2.png">
+<img width="470" alt="soal1" src="images/2.png">
 
 ```
 service bind9 restart
@@ -217,7 +217,7 @@ ping www.arjuna.e13.com -c 5
 host -t CNAME www.arjuna.e13.com
 ```
 
-<img width="470" alt="soal1" src="img/2.png">
+<img width="470" alt="soal1" src="images/2a.png">
 
 <h3>Soal 3</h3>
 Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
@@ -239,7 +239,7 @@ cp /etc/bind/db.local /etc/bind/jarkom/abimanyu.e13.com
 ```
 lakukan pengeditan `nano /etc/bind/jarkom/abimanyu.e13.com`
 
-<img width="470" alt="soal1" src="img/3.png">
+<img width="470" alt="soal1" src="images/3.png">
 
 ```
 service bind9 restart
@@ -253,7 +253,7 @@ ping www.abimanyu.e13.com -c 5
 host -t CNAME www.abimanyu.e13.com
 ```
 
-<img width="470" alt="soal1" src="img/3a.png">
+<img width="470" alt="soal1" src="images/3a.png">
 
 
 <h3>Soal 4</h3>
@@ -264,7 +264,7 @@ Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain p
 
 lakukan pengeditan `nano /etc/bind/jarkom/abimanyu.e13.com`
 
-<img width="470" alt="soal1" src="img/4.png">
+<img width="470" alt="soal1" src="images/4.png">
 
 service bind9 restart
 
@@ -275,7 +275,7 @@ service bind9 restart
 ```
 ping parikesit.abimanyu.e13.com -c 5
 ```
-<img width="470" alt="soal1" src="img/4a.png">
+<img width="470" alt="soal1" src="images/4a.png">
 
 
 <h3>Soal 5</h3>
@@ -299,7 +299,7 @@ cp /etc/bind/db.local /etc/bind/jarkom/1.43.10.in-addr.arpa
 ```
 Lalu, lakukan pengeditan `nano /etc/bind/jarkom/1.43.10.in-addr.arpa`
 
-<img width="470" alt="soal1" src="img/5.png">
+<img width="470" alt="soal1" src="images/5.png">
 
 service bind9 restart
 
@@ -311,7 +311,7 @@ service bind9 restart
 host -t PTR 10.43.1.4
 ```
 
-<img width="470" alt="soal1" src="img/5a.png">
+<img width="470" alt="soal1" src="images/5a.png">
 
 
 <h3>Soal 6</h3>
@@ -374,7 +374,7 @@ ping www.abimanyu.e13.com -c 5
 ping parikesit.abimanyu.e13.com -c 5
 ```
 
-<img width="470" alt="soal1" src="img/6.png">
+<img width="470" alt="soal1" src="images/6.png">
 
 
 
@@ -386,7 +386,7 @@ Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatl
   
 Lakukan Pengeditan  `nano /etc/bind/jarkom/abimanyu.e13.com`
 
-<img width="470" alt="soal1" src="img/7.png">
+<img width="470" alt="soal1" src="images/7.png">
 
 Lakukan pengeditan ` nano /etc/bind/named.conf.options`
 
@@ -431,7 +431,7 @@ cp /etc/bind/db.local /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com
 
 Lakukan Pengeditan  `nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com`  
 
-<img width="470" alt="soal1" src="img/7a.png">
+<img width="470" alt="soal1" src="images/7a.png">
 
 <h4>Testing</h4>  <a name="testing7"></a>
 
@@ -442,7 +442,7 @@ ping baratayuda.abimanyu.e13.com -c 5
 ping www.baratayuda.abimanyu.e13.com -c 5
 ```
 
-<img width="470" alt="soal1" src="img/7b.png">
+<img width="470" alt="soal1" src="images/7b.png">
 
 
 
@@ -454,7 +454,7 @@ Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdom
   
 Lakukan Pengeditan  `nano /etc/bind/Baratayuda/baratayuda.abimanyu.e13.com`   
 
-<img width="470" alt="soal1" src="img/8.png">
+<img width="470" alt="soal1" src="images/8.png">
 
 service bind9 restart
 
@@ -469,7 +469,7 @@ ping www.rjp.baratayuda.abimanyu.e13.com -c 5
 host -t A rjp.baratayuda.abimanyu.e13.com
 ```
 
-<img width="470" alt="soal1" src="img/8a.png">
+<img width="470" alt="soal1" src="images/8a.png">
 
 <h3>Soal 9</h3>
 Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
@@ -582,15 +582,15 @@ lynx http://10.43.1.6
 
 lynx http://10.43.1.4
 
-<img width="470" alt="soal1" src="img/9a.png">
+<img width="470" alt="soal1" src="images/9a.png">
 
 lynx http://10.43.1.5
 
-<img width="470" alt="soal1" src="img/9b.png">
+<img width="470" alt="soal1" src="images/9b.png">
 
 lynx http://10.43.1.6
 
-<img width="470" alt="soal1" src="img/9c.png">
+<img width="470" alt="soal1" src="images/9c.png">
 
 <h3>Soal 10</h3>
 Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
@@ -654,15 +654,15 @@ lynx http://10.43.1.6:8003
 
 lynx http://10.43.1.4
 
-<img width="470" alt="soal1" src="img/9a.png">
+<img width="470" alt="soal1" src="images/9a.png">
 
 lynx http://10.43.1.5
 
-<img width="470" alt="soal1" src="img/9b.png">
+<img width="470" alt="soal1" src="images/9b.png">
 
 lynx http://10.43.1.6
 
-<img width="470" alt="soal1" src="img/9c.png">
+<img width="470" alt="soal1" src="images/9c.png">
 
 
 <h3>Soal 11</h3>
@@ -740,7 +740,7 @@ service apache2 restart
 lynx abimanyu.e13.com
 ```
 
-<img width="470" alt="soal1" src="img/11.png">
+<img width="470" alt="soal1" src="images/11.png">
 
 <h3>Soal 12</h3>
 Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
@@ -767,7 +767,7 @@ service apache2 restart
 ```
 lynx abimanyu.e13.com/home
 ```
-<img width="470" alt="soal1" src="img/12.png">
+<img width="470" alt="soal1" src="images/12.png">
 
 <h3>Soal 13</h3>
 Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
@@ -824,7 +824,7 @@ service apache2 restart
 ```
 lynx parikesit.abimanyu.e13.com
 ```
-<img width="470" alt="soal1" src="img/13.png">
+<img width="470" alt="soal1" src="images/13.png">
 
 <h3>Soal 14</h3>
 Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
@@ -860,11 +860,11 @@ lynx parikesit.abimanyu.e13.com/secret
 ```
 lynx parikesit.abimanyu.e13.com/public
 
-<img width="470" alt="soal1" src="img/14a.png">
+<img width="470" alt="soal1" src="images/14a.png">
 
 lynx parikesit.abimanyu.e13.com/secret
 
-<img width="470" alt="soal1" src="img/14b.png">
+<img width="470" alt="soal1" src="images/14b.png">
 
 <h3>Soal 15</h3>
 Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
@@ -895,7 +895,7 @@ lynx parikesit.abimanyu.e13.com/testerror
 
 lynx parikesit.abimanyu.e13.com/secret
 
-<img width="470" alt="soal1" src="img/15b.png">
+<img width="470" alt="soal1" src="images/15b.png">
 
 <h3>Soal 16</h3>
 Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi www.parikesit.abimanyu.yyy.com/js
@@ -923,7 +923,7 @@ lynx parikesit.abimanyu.e13.com/js
 
 Hasil Sama:
 
-<img width="470" alt="soal1" src="img/16.png">
+<img width="470" alt="soal1" src="images/16.png">
 
 
 <h3>Soal 17</h3>
@@ -1005,15 +1005,15 @@ lynx rjp.baratayuda.abimanyu.e13.com:88000
 
 lynx rjp.baratayuda.abimanyu.e13.com:14000
 
-<img width="470" alt="soal1" src="img/17a.png">
+<img width="470" alt="soal1" src="images/17a.png">
 
 lynx rjp.baratayuda.abimanyu.e13.com:14400
 
-<img width="470" alt="soal1" src="img/17b.png">
+<img width="470" alt="soal1" src="images/17b.png">
 
 lynx rjp.baratayuda.abimanyu.e13.com:88000
 
-<img width="470" alt="soal1" src="img/17c.png">
+<img width="470" alt="soal1" src="images/17c.png">
 
 <h3>Soal 18</h3
 Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
@@ -1053,11 +1053,11 @@ service apache2 restart
 lynx rjp.baratayuda.abimanyu.e13.com:14000
 ```
 
-<img width="470" alt="soal1" src="img/18a.png">
+<img width="470" alt="soal1" src="images/18a.png">
 
-<img width="470" alt="soal1" src="img/18b.png">
+<img width="470" alt="soal1" src="images/18b.png">
 
-<img width="470" alt="soal1" src="img/18c.png">
+<img width="470" alt="soal1" src="images/18c.png">
 
 
 <h3>Soal 19</h3>
@@ -1093,7 +1093,7 @@ service apache2 restart
 ```
 lynx 10.43.1.4
 ```
-<img width="470" alt="soal1" src="img/19.png">
+<img width="470" alt="soal1" src="images/19.png">
 
 <h3>Soal 20</h3>
 Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
@@ -1145,6 +1145,6 @@ lynx parikesit.abimanyu.e13.com/public/images/elegance-abim.jpg
 lynx parikesit.abimanyu.e13.com/public/images/desmondwawklkl.sakdae
 lynx parikesit.abimanyu.e13.com/public/images/notabimanyujustmuseum.177013
 ```
-<img width="470" alt="soal1" src="img/20a.png">
+<img width="470" alt="soal1" src="images/20a.png">
 
-<img width="470" alt="soal1" src="img/20b.png">
+<img width="470" alt="soal1" src="images/20b.png">
